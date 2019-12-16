@@ -47,5 +47,10 @@ namespace ImagesGallery.ViewModels
             WindowTitle = batch?.SourceLabel;
             Images = new ObservableCollection<string>(batch?.ImagePaths);
         }
+
+        public void CloseApplication()
+        {
+            App.Current.Shutdown();
+        }
     }
 }
