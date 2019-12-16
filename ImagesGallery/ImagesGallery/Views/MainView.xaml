@@ -6,6 +6,7 @@
         xmlns:model="clr-namespace:ImagesGallery.ViewModels"
         xmlns:local="clr-namespace:ImagesGallery.Views"
         xmlns:micro="clr-namespace:Caliburn.Micro"
+        xmlns:control="clr-namespace:ImagesGallery.Controls"
         mc:Ignorable="d"
         d:DataContext="{x:Type model:MainViewModel}"
         Title="{Binding WindowTitle}"
@@ -16,10 +17,10 @@
             <Grid>
                 <Border BorderBrush="White" 
                         BorderThickness="3" 
-                        Width="100" 
-                        Height="100"
                         Padding="10"
-                        Margin="15">
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
                     <!--Bind Image Path in Image Control-->
                     <Image Source="{Binding}" 
                            Stretch="Fill"  
@@ -29,14 +30,19 @@
             </Grid>
         </DataTemplate>
         <ItemsPanelTemplate x:Key="ImageItemPanelTemplate">
-            <!--Display Images on UniformGrid Panel-->
-                <UniformGrid Columns="5"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Stretch"/>
+            <control:VirtualizingTilePanel
+                ChildHeight="190"
+                MinChildWidth="190">
+            </control:VirtualizingTilePanel>
         </ItemsPanelTemplate>
     </Window.Resources>
-    <StackPanel>
-        <DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load Directory" x:Name="LoadDirectory"/>
@@ -45,26 +51,26 @@
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
-        <StackPanel>
-            <Grid Background="LightGray">
-                <Label FontSize="42"
+        <Grid Grid.Row="1" Background="LightGray">
+            <Label FontSize="42"
                    HorizontalAlignment="Center">
-                    Main Gallery
-                </Label>
-            </Grid>
-            <ListBox x:Name="LsImageGallery"
-                     ItemsSource="{Binding Images}"
-                     VirtualizingStackPanel.IsVirtualizing="True"
-                     VirtualizingStackPanel.VirtualizationMode="Recycling"
-                     ItemTemplate="{DynamicResource ImageItemTemplate}" 
-                     ItemsPanel="{DynamicResource ImageItemPanelTemplate}">
-                <ListBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="LightGray"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </ListBox.Background>
-            </ListBox>
-        </StackPanel>
-    </StackPanel>
+                Main Gallery
+            </Label>
+        </Grid>
+        <!--ItemsPanel="{DynamicResource ImageItemPanelTemplate}"-->
+        <ListBox Grid.Row="2" x:Name="LsImageGallery"
+                         ItemsSource="{Binding Images}"
+                         ItemTemplate="{StaticResource ImageItemTemplate}"
+                         ItemsPanel="{StaticResource ImageItemPanelTemplate}"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.VirtualizationMode="Recycling"
+                         Height="Auto">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="LightGray"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+    </Grid>
 </Window>

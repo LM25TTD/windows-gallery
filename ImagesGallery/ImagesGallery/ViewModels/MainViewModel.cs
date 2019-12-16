@@ -44,8 +44,11 @@ namespace ImagesGallery.ViewModels
         public void LoadDirectory()
         {
             ImageBatch batch = imagesPathLoader?.LoadImagePaths();
-            WindowTitle = batch?.SourceLabel;
-            Images = new ObservableCollection<string>(batch?.ImagePaths);
+            if (batch != null)
+            {
+                WindowTitle = batch.SourceLabel;
+                Images = new ObservableCollection<string>(batch.ImagePaths);
+            }
         }
 
         public void CloseApplication()
