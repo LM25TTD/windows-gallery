@@ -5,11 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:ImagesGallery.ViewModels"
         xmlns:local="clr-namespace:ImagesGallery.Views"
+        xmlns:micro="clr-namespace:Caliburn.Micro"
         mc:Ignorable="d"
         d:DataContext="{x:Type model:MainViewModel}"
         Title="{Binding WindowTitle}"
-        Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Height="600"
+        Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="ImageItemTemplate">
+            <Grid>
+                <Border BorderBrush="White" 
+                        BorderThickness="3" 
+                        Width="100" 
+                        Height="100"
+                        Padding="10"
+                        Margin="15">
+                    <!--Bind Image Path in Image Control-->
+                    <Image Source="{Binding}" 
+                           Stretch="Fill"  
+                           HorizontalAlignment="Center">
+                    </Image>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="ImageItemPanelTemplate">
+            <!--Display Images on UniformGrid Panel-->
+                <UniformGrid Columns="5"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Stretch"/>
+        </ItemsPanelTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Load Directory" x:Name="LoadDirectory"/>
+                    <MenuItem Header="_Exit"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
+        <StackPanel>
+            <Grid Background="LightGray">
+                <Label FontSize="42"
+                   HorizontalAlignment="Center">
+                    Main Gallery
+                </Label>
+            </Grid>
+            <ListBox x:Name="LsImageGallery"
+                     ItemsSource="{Binding Images}"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     ItemTemplate="{DynamicResource ImageItemTemplate}" 
+                     ItemsPanel="{DynamicResource ImageItemPanelTemplate}">
+                <ListBox.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="LightGray"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </ListBox.Background>
+            </ListBox>
+        </StackPanel>
+    </StackPanel>
 </Window>
