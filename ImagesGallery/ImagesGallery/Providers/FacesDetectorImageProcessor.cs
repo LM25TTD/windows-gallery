@@ -37,6 +37,8 @@ namespace ImagesGallery.Providers
                     var fileBytes = File.ReadAllBytes(imageSource);
 
                     //FIXME: this is a sample call, for production, must be well structured
+                    //TODO: at the moment of development, this API was not working. Check if
+                    // the responses do the job properly in the future.
                     HttpResponse<FacesApiResponse> response =
                            Unirest.post("https://apicloud-facerect.p.rapidapi.com/process-file.json")
                         .header("X-RapidAPI-Host", "apicloud-facerect.p.rapidapi.com")
