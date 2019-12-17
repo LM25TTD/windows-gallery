@@ -39,6 +39,8 @@ namespace ImagesGallery
             container.PerRequest<IImagesPathLoaderService, FolderImagesLoaderService>();
 
             container.PerRequest<IImageProcessor, FacesDetectorImageProcessor>();
+
+            container.PerRequest<IImageProcessor, OriginalContentImageProcessor>();
         }
 
         protected override object GetInstance(Type service, string key)
