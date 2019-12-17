@@ -15,6 +15,15 @@ using unirest_net.http;
 
 namespace ImagesGallery.Providers
 {
+    /// <summary>
+    /// This image processor calls a backend api to detect faces in the image.
+    /// After successful response, the image is annotated with rectangles, one for each
+    /// face area. Metadata will store a FacesApiResponse object with the faces position. 
+    /// 
+    /// In case of fail response, the image will get a red line on diagonal and the
+    /// Metadata will be null.
+    /// 
+    /// </summary>
     class FacesDetectorImageProcessor : IImageProcessor
     {
         private string imageSource;

@@ -11,6 +11,10 @@ using ImagesGallery.Services;
 
 namespace ImagesGallery.ViewModels
 {
+    /// <summary>
+    /// This view model shows an image in bigger size and bring imaging processor
+    /// features to be applied to the current image.
+    /// </summary>
     class ImageDetailsViewModel : Screen
     {
         public ImageDetailsViewModel()
@@ -27,6 +31,9 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Dynamic loaded image processor available in this app.
+        /// </summary>
         public ObservableCollection<IImageProcessor> _imageProcessors = null;
         public ObservableCollection<IImageProcessor> ImageProcessors
         {
@@ -41,6 +48,9 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Current image URI
+        /// </summary>
         private string _imageSource = null;
         public string ImageSource
         {
@@ -55,6 +65,9 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Current image source for View
+        /// </summary>
         private BitmapImage _image = null;
         public BitmapImage Image
         {
@@ -83,12 +96,18 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected image processor to work with the current image
+        /// </summary>
         public IImageProcessor CurrentImageProcessor
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Looks up for all IImageProcessor instances and get them references to be used here.
+        /// </summary>
         private void LoadImageProcessors()
         {
             IEnumerable<object> imageProcessors =
@@ -101,6 +120,9 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Apply the selected image processor and get it's response BitmapImage
+        /// </summary>
         public async void ApplyImageProcessor()
         {
             if(CurrentImageProcessor != null)

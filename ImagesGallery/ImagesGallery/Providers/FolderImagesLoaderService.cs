@@ -13,6 +13,10 @@ using ImagesGallery.Services;
 
 namespace ImagesGallery.Providers
 {
+    /// <summary>
+    /// This implementation looks for image inside a Windows folder and
+    /// return theirs URIs.
+    /// </summary>
     class FolderImagesLoaderService : IImagesPathLoaderService
     {
         private Regex rgxPictureFiles = new Regex(@"bmp|png|jpg|gif");

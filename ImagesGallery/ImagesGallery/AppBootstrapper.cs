@@ -12,8 +12,15 @@ using ImagesGallery.Providers;
 
 namespace ImagesGallery
 {
+    /// <summary>
+    /// Caliburn Bootstrap for the app. Configures the application environment by defining
+    /// the container, registering instances and defining the initial view to be loaded.
+    /// </summary>
     class AppBootstrapper: BootstrapperBase
     {
+        /// <summary>
+        /// The IoC container
+        /// </summary>
         private SimpleContainer container;
 
         public AppBootstrapper()
@@ -23,9 +30,13 @@ namespace ImagesGallery
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            // Configure the root view
             DisplayRootViewFor<MainViewModel>();
         }
 
+        /// <summary>
+        /// Here is the place to register all instances of IoC
+        /// </summary>
         protected override void Configure()
         {
             container = new SimpleContainer();
@@ -36,7 +47,12 @@ namespace ImagesGallery
 
             container.Singleton<ImageDetailsViewModel>();
 
+            // Register a single type service
+
             container.PerRequest<IImagesPathLoaderService, FolderImagesLoaderService>();
+
+            // We can register many implementations for one service by defining a common
+            // interface.
 
             container.PerRequest<IImageProcessor, FacesDetectorImageProcessor>();
 

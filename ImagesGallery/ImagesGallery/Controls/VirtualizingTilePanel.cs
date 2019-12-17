@@ -6,13 +6,14 @@ using System;
 using System.Diagnostics;
 using System.Collections.Specialized;
 
-// 3rd part class, obtained from CodeProject at linkÇ
-// https://www.codeproject.com/Articles/158060/Dan-Crevier-s-VirtualizingTilePanel-Mod
-// Other articles:
-// https://www.codeproject.com/Articles/309151/Wrap-Panel-Virtualization visible in MVVM can be set
-// https://www.codeproject.com/Articles/75847/Virtualizing-WrapPanel handle several datatemplates
-// Fast loading of 3000 testimages, scrolling slow
-
+/// <summary>
+/// 3rd part class, obtained from CodeProject at link:
+/// https://www.codeproject.com/Articles/158060/Dan-Crevier-s-VirtualizingTilePanel-Mod
+/// Other articles:
+/// https://www.codeproject.com/Articles/309151/Wrap-Panel-Virtualization visible in MVVM can be set
+/// https://www.codeproject.com/Articles/75847/Virtualizing-WrapPanel handle several datatemplates
+/// Fast loading of 3000 testimages, scrolling slow
+/// </summary>
 namespace ImagesGallery.Controls
 {
     /// <summary>

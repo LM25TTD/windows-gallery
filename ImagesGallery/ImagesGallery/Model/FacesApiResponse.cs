@@ -53,6 +53,10 @@ namespace ImagesGallery.Model
         public int height { get; set; }
     }
 
+    /// <summary>
+    /// Object representation for https://rapidapi.com/apicloud/api/facerect
+    /// response.
+    /// </summary>
     public class FacesApiResponse
     {
         public List<Face> faces { get; set; }

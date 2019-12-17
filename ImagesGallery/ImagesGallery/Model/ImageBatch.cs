@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ImagesGallery.Model
 {
+    /// <summary>
+    /// Model to carries a directory load information,
+    /// bringing the folder and files URIs.
+    /// </summary>
     class ImageBatch
     {
         public ImageBatch(string sourceLabel, List<string> imagePaths)

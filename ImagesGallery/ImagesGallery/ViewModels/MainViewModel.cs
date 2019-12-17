@@ -10,8 +10,17 @@ using ImagesGallery.Model;
 
 namespace ImagesGallery.ViewModels
 {
+    /// <summary>
+    /// Root view model of the application. It function is get the result of load a directory
+    /// images and set it references to a ObservableCollection, this can be consumed by
+    /// the View layer through binding
+    /// </summary>
     class MainViewModel : Screen
     {
+        /// <summary>
+        /// Delegate the images loader procces to a interface service, so we can
+        /// replace it implementation easily.
+        /// </summary>
         private IImagesPathLoaderService imagesPathLoader;
         private ImageDetailsViewModel imageDetailsViewModel;
         private IWindowManager windowManager;
@@ -48,6 +57,10 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Load action:
+        /// Call the image loader service and update the Images collection
+        /// </summary>
         public void LoadDirectory()
         {
             ImageBatch batch = imagesPathLoader?.LoadImagePaths();
@@ -58,11 +71,18 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        /// <summary>
+        /// Close app action.
+        /// </summary>
         public void CloseApplication()
         {
             App.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Show detail action. Must be bind to image click UI action.
+        /// </summary>
+        /// <param name="imageUrl"></param>
         public void ShowImageDetail(string imageUrl)
         {
             this.imageDetailsViewModel.ImageSource = imageUrl;

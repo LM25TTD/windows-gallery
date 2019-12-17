@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace ImagesGallery.Providers
 {
+    /// <summary>
+    /// This implementation of image processor brings the image to their original content.
+    /// </summary>
     class OriginalContentImageProcessor : IImageProcessor
     {
         private string imageSource;
