@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ImagesGallery.Services;
 
@@ -14,6 +16,15 @@ namespace ImagesGallery.ViewModels
         public ImageDetailsViewModel()
         {
             LoadImageProcessors();
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            if(ImageSource != null)
+            {
+                Image = new BitmapImage(new Uri(ImageSource));
+            }
         }
 
         public ObservableCollection<IImageProcessor> _imageProcessors = null;
@@ -44,6 +55,20 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        private BitmapImage _image = null;
+        public BitmapImage Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                _image = value;
+                NotifyOfPropertyChange(() => Image);
+            }
+        }
+
         private string _windowTitle = "Image Details";
         public string WindowTitle
         {
@@ -58,6 +83,12 @@ namespace ImagesGallery.ViewModels
             }
         }
 
+        public IImageProcessor CurrentImageProcessor
+        {
+            get;
+            set;
+        }
+
         private void LoadImageProcessors()
         {
             IEnumerable<object> imageProcessors =
@@ -67,6 +98,23 @@ namespace ImagesGallery.ViewModels
             {
                 ImageProcessors = 
                     new ObservableCollection<IImageProcessor>(imageProcessors.Cast<IImageProcessor>());
+            }
+        }
+
+        public async void ApplyImageProcessor()
+        {
+            if(CurrentImageProcessor != null)
+            {
+                var uiContext = TaskScheduler.FromCurrentSynchronizationContext();
+
+                CurrentImageProcessor.SetImageSource(ImageSource);
+
+                // Enforce update image to run on UI thread
+                await Task.Factory.StartNew(async () => {
+                    BitmapImage result = await CurrentImageProcessor.ProcessImage();
+                    Image = result;
+                } , CancellationToken.None, TaskCreationOptions.None, uiContext);
+
             }
         }
     }

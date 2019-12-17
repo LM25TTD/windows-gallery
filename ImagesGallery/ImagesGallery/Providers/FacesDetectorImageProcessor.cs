@@ -5,30 +5,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace ImagesGallery.Providers
 {
     class FacesDetectorImageProcessor : IImageProcessor
     {
+        private string imageSource;
+
         public string Label
         {
             get
             {
-                return "_Faces Detector";
+                return "Faces Detector";
             }
         }
 
-        public ICommand ProcessImage
+        public Task<BitmapImage> ProcessImage()
         {
-            get
+            Task<BitmapImage> task = new Task<BitmapImage>(() =>
             {
-                return null;
-            }
+                return new BitmapImage(new Uri(this.imageSource));
+            });
+
+            task.Start();
+
+            return task;
         }
 
         public void SetImageSource(string source)
         {
-            throw new NotImplementedException();
+            this.imageSource = source;
         }
     }
 }

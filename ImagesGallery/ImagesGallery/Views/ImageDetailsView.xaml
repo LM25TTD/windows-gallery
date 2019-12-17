@@ -13,26 +13,33 @@
         Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Image Processors" ItemsSource="{Binding ImageProcessors}">
-                    <MenuItem.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="MenuItem.Header" Value="{Binding Label}"/>
-                            <Setter Property="MenuItem.Command" Value="{Binding ProcessImage}"/>
-                        </Style>
-                    </MenuItem.ItemContainerStyle>
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-        <Image Grid.Row="1" Source="{Binding ImageSource}" 
+        <Image Grid.Row="0" Source="{Binding Image}" 
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Stretch="Uniform"
                Margin="15">
         </Image>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center">
+            <ComboBox Width="300"
+                      Margin="5"
+                      SelectedItem="{Binding CurrentImageProcessor}"
+                      ItemsSource="{Binding ImageProcessors}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Text="{Binding Label}" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="ApplyImageProcessor" Margin="5">
+                Apply
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
