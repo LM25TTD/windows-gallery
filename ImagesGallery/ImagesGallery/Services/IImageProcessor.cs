@@ -11,6 +11,8 @@ namespace ImagesGallery.Services
     interface IImageProcessor
     {
         string Label { get; }
+        List<object> Metadata { get; }
+
         Task<BitmapImage> ProcessImage();
         void SetImageSource(string source);
     }

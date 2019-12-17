@@ -27,6 +27,19 @@ namespace ImagesGallery.Providers
             }
         }
 
+        private List<object> _metadata;
+        public List<object> Metadata
+        {
+            get
+            {
+                return _metadata;
+            }
+            private set
+            {
+                _metadata = value;
+            }
+        }
+
         private async Task<HttpResponse<FacesApiResponse>> PostToRapidApi()
         {
             // Do the network job in background thread
@@ -59,49 +72,56 @@ namespace ImagesGallery.Providers
 
         private async Task<BitmapImage> DetectFaces()
         {
+            // bmp is the original BitmapImage
             var bmp = new BitmapImage(new Uri(imageSource));
+            var target = new RenderTargetBitmap(bmp.PixelWidth, bmp.PixelHeight, bmp.DpiX, bmp.DpiY, PixelFormats.Pbgra32);
+            var visual = new DrawingVisual();
+
             HttpResponse<FacesApiResponse> apiResponse = await PostToRapidApi();
 
-            if (apiResponse != null
+            using (var r = visual.RenderOpen())
+            {
+                if (apiResponse != null
                 && apiResponse.Body != null
                 && apiResponse.Body.faces != null
                 && apiResponse.Body.faces.Count > 0)
-            {
-                // bmp is the original BitmapImage
-                var target = new RenderTargetBitmap(bmp.PixelWidth, bmp.PixelHeight, bmp.DpiX, bmp.DpiY, PixelFormats.Pbgra32);
-                var visual = new DrawingVisual();
-
-                using (var r = visual.RenderOpen())
                 {
+                    // Fills the processor metadata
+                    Metadata = new List<object>
+                    {
+                        apiResponse.Body
+                    };
+
                     foreach (Face face in apiResponse.Body.faces)
                     {
                         r.DrawImage(bmp, new Rect(face.x, face.y, face.width, face.height));
                     }
-
                 }
-
-                target.Render(visual);
-
-                BitmapSource bitmapSource = target;
-
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                MemoryStream memoryStream = new MemoryStream();
-
-                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-                encoder.Save(memoryStream);
-
-                memoryStream.Position = 0;
-
-                BitmapImage bImg = new BitmapImage();
-                bImg.BeginInit();
-                bImg.StreamSource = new MemoryStream(memoryStream.ToArray());
-                bImg.EndInit();
-                bImg.Freeze();
-
-                return bImg;
+                else
+                {
+                    r.DrawLine(new Pen(Brushes.Red, 10.0), new Point(0, 0), new Point(bmp.Width, bmp.Height));
+                }
             }
 
-            return bmp;
+            target.Render(visual);
+
+            BitmapSource bitmapSource = target;
+
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            MemoryStream memoryStream = new MemoryStream();
+
+            encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+            encoder.Save(memoryStream);
+
+            memoryStream.Position = 0;
+
+            BitmapImage bImg = new BitmapImage();
+            bImg.BeginInit();
+            bImg.StreamSource = new MemoryStream(memoryStream.ToArray());
+            bImg.EndInit();
+            bImg.Freeze();
+
+            return bImg;
         }
 
         public async Task<BitmapImage> ProcessImage()

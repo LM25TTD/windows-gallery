@@ -21,6 +21,14 @@ namespace ImagesGallery.Providers
             }
         }
 
+        public List<object> Metadata
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public Task<BitmapImage> ProcessImage()
         {
             Task<BitmapImage> task = new Task<BitmapImage>(() =>
