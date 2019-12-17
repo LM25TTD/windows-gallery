@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using System.Collections.ObjectModel;
-using ImagesGallery.Utils;
+using ImagesGallery.Services;
 using ImagesGallery.Model;
 
 namespace ImagesGallery.ViewModels
 {
     class MainViewModel : Screen
     {
-        private IImagesPathLoader imagesPathLoader;
+        private IImagesPathLoaderService imagesPathLoader;
         private ImageDetailsViewModel imageDetailsViewModel;
         private IWindowManager windowManager;
 
         public MainViewModel(
-            IImagesPathLoader imagesPathLoader, 
+            IImagesPathLoaderService imagesPathLoader, 
             ImageDetailsViewModel imageDetailsViewModel,
             IWindowManager windowManager)
         {

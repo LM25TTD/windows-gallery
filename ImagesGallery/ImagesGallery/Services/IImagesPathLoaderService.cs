@@ -1,8 +1,8 @@
 ﻿using ImagesGallery.Model;
 
-namespace ImagesGallery.Utils
+namespace ImagesGallery.Services
 {
-    interface IImagesPathLoader
+    interface IImagesPathLoaderService
     {
         ImageBatch LoadImagePaths();
     }

@@ -8,10 +8,12 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Collections.ObjectModel;
 using ImagesGallery.Model;
+using ImagesGallery.Services;
 
-namespace ImagesGallery.Utils
+
+namespace ImagesGallery.Providers
 {
-    class FolderImagesLoader : IImagesPathLoader
+    class FolderImagesLoaderService : IImagesPathLoaderService
     {
         private Regex rgxPictureFiles = new Regex(@"bmp|png|jpg|gif");
 

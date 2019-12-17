@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using ImagesGallery.ViewModels;
-using ImagesGallery.Utils;
+using ImagesGallery.Services;
+using ImagesGallery.Providers;
+
 
 namespace ImagesGallery
 {
@@ -32,9 +34,9 @@ namespace ImagesGallery
        
             container.Singleton<MainViewModel>();
 
-            container.PerRequest<IImagesPathLoader, FolderImagesLoader>();
-
             container.Singleton<ImageDetailsViewModel>();
+
+            container.PerRequest<IImagesPathLoaderService, FolderImagesLoaderService>();
         }
 
         protected override object GetInstance(Type service, string key)
