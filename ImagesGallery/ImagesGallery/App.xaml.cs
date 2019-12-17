@@ -15,7 +15,6 @@ namespace ImagesGallery
     {
         public App()
         {
-            this.
             InitializeComponent();
         }
     }

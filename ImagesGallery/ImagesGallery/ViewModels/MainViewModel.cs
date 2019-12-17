@@ -10,13 +10,20 @@ using ImagesGallery.Model;
 
 namespace ImagesGallery.ViewModels
 {
-    class MainViewModel : PropertyChangedBase
+    class MainViewModel : Screen
     {
         private IImagesPathLoader imagesPathLoader;
+        private ImageDetailsViewModel imageDetailsViewModel;
+        private IWindowManager windowManager;
 
-        public MainViewModel(IImagesPathLoader imagesPathLoader)
+        public MainViewModel(
+            IImagesPathLoader imagesPathLoader, 
+            ImageDetailsViewModel imageDetailsViewModel,
+            IWindowManager windowManager)
         {
             this.imagesPathLoader = imagesPathLoader;
+            this.imageDetailsViewModel = imageDetailsViewModel;
+            this.windowManager = windowManager;
         }
 
         private string _windowTitle = "ImagesGallery";
@@ -46,7 +53,7 @@ namespace ImagesGallery.ViewModels
             ImageBatch batch = imagesPathLoader?.LoadImagePaths();
             if (batch != null)
             {
-                WindowTitle = batch.SourceLabel;
+                WindowTitle = "Loaded folder: " + batch.SourceLabel;
                 Images = new ObservableCollection<string>(batch.ImagePaths);
             }
         }
@@ -54,6 +61,17 @@ namespace ImagesGallery.ViewModels
         public void CloseApplication()
         {
             App.Current.Shutdown();
+        }
+
+        public void ShowImageDetail(string imageUrl)
+        {
+            this.imageDetailsViewModel.ImageSource = imageUrl;
+            this.imageDetailsViewModel.WindowTitle = "Loaded image: " + imageUrl;
+
+            if (!this.imageDetailsViewModel.IsActive)
+            {
+                this.windowManager.ShowWindow(this.imageDetailsViewModel);
+            }
         }
     }
 }

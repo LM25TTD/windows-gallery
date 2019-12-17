@@ -6,6 +6,7 @@
         xmlns:model="clr-namespace:ImagesGallery.ViewModels"
         xmlns:local="clr-namespace:ImagesGallery.Views"
         xmlns:micro="clr-namespace:Caliburn.Micro"
+        xmlns:cal="http://www.caliburnproject.org"
         xmlns:control="clr-namespace:ImagesGallery.Controls"
         mc:Ignorable="d"
         d:DataContext="{x:Type model:MainViewModel}"
@@ -14,16 +15,15 @@
         Width="800">
     <Window.Resources>
         <DataTemplate x:Key="ImageItemTemplate">
-            <Grid>
+            <Grid cal:Message.Attach="[Event MouseLeftButtonUp] = [Action ShowImageDetail($dataContext)]">
                 <Border BorderBrush="White" 
                         BorderThickness="3" 
-                        Padding="10"
                         Margin="10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                     <!--Bind Image Path in Image Control-->
                     <Image Source="{Binding}" 
-                           Stretch="Fill"  
+                           Stretch="UniformToFill"  
                            HorizontalAlignment="Center">
                     </Image>
                 </Border>

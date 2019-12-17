@@ -33,6 +33,8 @@ namespace ImagesGallery
             container.Singleton<MainViewModel>();
 
             container.PerRequest<IImagesPathLoader, FolderImagesLoader>();
+
+            container.Singleton<ImageDetailsViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

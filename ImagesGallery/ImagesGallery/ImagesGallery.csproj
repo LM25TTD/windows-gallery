@@ -68,6 +68,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\VirtualizingTilePanel.cs" />
+    <Page Include="Views\ImageDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -80,7 +84,11 @@
     <Compile Include="Model\ImageBatch.cs" />
     <Compile Include="Utils\IImagesPathLoader.cs" />
     <Compile Include="Utils\FolderImagesLoader.cs" />
+    <Compile Include="ViewModels\ImageDetailsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\ImageDetailsView.xaml.cs">
+      <DependentUpon>ImageDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
