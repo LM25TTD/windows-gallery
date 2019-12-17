@@ -82,6 +82,8 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Model\ImageBatch.cs" />
+    <Compile Include="Providers\FacesDetectorImageProcessor.cs" />
+    <Compile Include="Services\IImageProcessor.cs" />
     <Compile Include="Services\IImagesPathLoaderService.cs" />
     <Compile Include="Providers\FolderImagesLoaderService.cs" />
     <Compile Include="ViewModels\ImageDetailsViewModel.cs" />

@@ -12,7 +12,23 @@
         Height="600" 
         Width="800">
     <Grid>
-        <Image Source="{Binding ImageSource}" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Image Processors" ItemsSource="{Binding ImageProcessors}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="MenuItem.Header" Value="{Binding Label}"/>
+                            <Setter Property="MenuItem.Command" Value="{Binding ProcessImage}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Image Grid.Row="1" Source="{Binding ImageSource}" 
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Stretch="Uniform"

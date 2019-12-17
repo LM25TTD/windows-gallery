@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using ImagesGallery.Services;
 
 namespace ImagesGallery.ViewModels
 {
@@ -11,6 +13,21 @@ namespace ImagesGallery.ViewModels
     {
         public ImageDetailsViewModel()
         {
+            LoadImageProcessors();
+        }
+
+        public ObservableCollection<IImageProcessor> _imageProcessors = null;
+        public ObservableCollection<IImageProcessor> ImageProcessors
+        {
+            get
+            {
+                return _imageProcessors;
+            }
+            set
+            {
+                _imageProcessors = value;
+                NotifyOfPropertyChange(()=> ImageProcessors);
+            }
         }
 
         private string _imageSource = null;
@@ -38,6 +55,18 @@ namespace ImagesGallery.ViewModels
             {
                 _windowTitle = value;
                 NotifyOfPropertyChange(()=> WindowTitle);
+            }
+        }
+
+        private void LoadImageProcessors()
+        {
+            IEnumerable<object> imageProcessors =
+                IoC.GetAllInstances(typeof(IImageProcessor));
+
+            if (imageProcessors != null)
+            {
+                ImageProcessors = 
+                    new ObservableCollection<IImageProcessor>(imageProcessors.Cast<IImageProcessor>());
             }
         }
     }
